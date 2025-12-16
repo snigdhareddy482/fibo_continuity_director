@@ -1,0 +1,7 @@
+streamlit
+requests
+pydantic
+pillow
+numpy
+moviepy
+python-dotenv

@@ -1,0 +1,13 @@
+- [x] Launch Streamlit App
+  - [x] Run `streamlit run app/ui/main.py`
+  - [x] Verify server is running
+  - [x] Open in browser
+
+- [x] Shot Roles & Continuity Feature
+  - [x] Explore existing codebase structure
+  - [x] Create implementation plan
+  - [x] Update `schemas.py` with new fields
+  - [x] Update `planner.py` with shot role generation
+  - [x] Update `main.py` with UI annotations
+  - [x] Add per-shot edit controls
+  - [x] Test and verify
