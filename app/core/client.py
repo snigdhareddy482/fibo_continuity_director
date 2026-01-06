@@ -4,6 +4,7 @@ FIBO Client - Handles API communication with Bria FIBO for text-to-image generat
 import os
 import logging
 import requests
+import base64
 from typing import Dict, Any, Optional
 from PIL import Image, ImageDraw
 from io import BytesIO
@@ -242,7 +243,6 @@ class FiboClient:
             return {"status": "error", "error": "API key not configured"}
         
         try:
-            import base64
             with open(image_path, "rb") as f:
                 img_data = base64.b64encode(f.read()).decode()
             
@@ -279,7 +279,6 @@ class FiboClient:
             return {"status": "error", "error": "API key not configured"}
         
         try:
-            import base64
             with open(image_path, "rb") as f:
                 img_data = base64.b64encode(f.read()).decode()
             with open(mask_path, "rb") as f:
@@ -321,7 +320,6 @@ class FiboClient:
             return {"status": "error", "error": "API key not configured"}
         
         try:
-            import base64
             with open(image_path, "rb") as f:
                 img_data = base64.b64encode(f.read()).decode()
             with open(mask_path, "rb") as f:
@@ -362,7 +360,6 @@ class FiboClient:
             return {"status": "error", "error": "API key not configured"}
         
         try:
-            import base64
             with open(image_path, "rb") as f:
                 img_data = base64.b64encode(f.read()).decode()
             
@@ -401,7 +398,6 @@ class FiboClient:
             return {"status": "error", "error": "API key not configured"}
         
         try:
-            import base64
             with open(image_path, "rb") as f:
                 img_data = base64.b64encode(f.read()).decode()
             

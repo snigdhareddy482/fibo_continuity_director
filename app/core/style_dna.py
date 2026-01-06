@@ -205,14 +205,25 @@ def analyze_contrast(colors: List[Tuple[int, int, int]]) -> str:
         return "medium"
 
 
-def match_to_palette(colors: List[Tuple[int, int, int]]) -> str:
-    """Match extracted colors to a predefined palette."""
+def match_to_palette(colors: List[Tuple[int, int, int]], warmth: Optional[str] = None, saturation: Optional[str] = None, brightness: Optional[str] = None) -> str:
+    """Match extracted colors to a predefined palette.
+    
+    Args:
+        colors: List of RGB color tuples
+        warmth: Pre-computed warmth value (optional, computed if not provided)
+        saturation: Pre-computed saturation value (optional, computed if not provided)
+        brightness: Pre-computed brightness value (optional, computed if not provided)
+    """
     if not colors:
         return "teal_orange"  # Default
     
-    warmth = analyze_warmth(colors)
-    saturation = analyze_saturation(colors)
-    brightness = analyze_brightness(colors)
+    # Use pre-computed values if provided, otherwise compute them
+    if warmth is None:
+        warmth = analyze_warmth(colors)
+    if saturation is None:
+        saturation = analyze_saturation(colors)
+    if brightness is None:
+        brightness = analyze_brightness(colors)
     
     # Match based on characteristics
     if saturation == "vibrant" and brightness == "dark":
@@ -248,8 +259,8 @@ def extract_style_from_colors(colors: List[Tuple[int, int, int]], source: str = 
     saturation = analyze_saturation(colors)
     warmth = analyze_warmth(colors)
     
-    # Match to palette
-    palette_name = match_to_palette(colors)
+    # Match to palette (pass pre-computed values to avoid redundant calculations)
+    palette_name = match_to_palette(colors, warmth=warmth, saturation=saturation, brightness=brightness)
     
     # Build color info list
     color_infos = []

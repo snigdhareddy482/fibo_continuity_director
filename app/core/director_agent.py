@@ -84,9 +84,15 @@ MOOD_KEYWORDS = {
 }
 
 
-def detect_scene_type(description: str) -> str:
-    """Detect the type of scene from description."""
-    desc_lower = description.lower()
+def detect_scene_type(description: str, desc_lower: Optional[str] = None) -> str:
+    """Detect the type of scene from description.
+    
+    Args:
+        description: The scene description text
+        desc_lower: Optional pre-computed lowercase version of description
+    """
+    if desc_lower is None:
+        desc_lower = description.lower()
     scores = {}
     
     for scene_type, keywords in SCENE_KEYWORDS.items():
@@ -97,9 +103,15 @@ def detect_scene_type(description: str) -> str:
     return "general"
 
 
-def detect_mood(description: str) -> str:
-    """Detect the mood/atmosphere from description."""
-    desc_lower = description.lower()
+def detect_mood(description: str, desc_lower: Optional[str] = None) -> str:
+    """Detect the mood/atmosphere from description.
+    
+    Args:
+        description: The scene description text
+        desc_lower: Optional pre-computed lowercase version of description
+    """
+    if desc_lower is None:
+        desc_lower = description.lower()
     scores = {}
     
     for mood, keywords in MOOD_KEYWORDS.items():
@@ -269,8 +281,10 @@ def analyze_scene(description: str) -> DirectorSuggestions:
     Returns:
         DirectorSuggestions with camera, lighting, color, and composition recommendations
     """
-    scene_type = detect_scene_type(description)
-    mood = detect_mood(description)
+    # Pre-compute lowercase once for efficiency
+    desc_lower = description.lower()
+    scene_type = detect_scene_type(description, desc_lower)
+    mood = detect_mood(description, desc_lower)
     
     camera = suggest_camera(scene_type, mood)
     lighting = suggest_lighting(scene_type, mood)
