@@ -67,9 +67,9 @@ def create_storyboard_grid(image_paths: List[str], output_path: str, grid_cols: 
         
         # Process and paste images one at a time to reduce memory usage
         for idx, img_path in enumerate(valid_paths):
-            with Image.open(img_path) as img:
-                img = img.convert("RGB")
-                thumb = img.resize((thumb_w, thumb_h), Image.Resampling.LANCZOS)
+            with Image.open(img_path) as raw_img:
+                rgb_img = raw_img.convert("RGB")
+                thumb = rgb_img.resize((thumb_w, thumb_h), Image.Resampling.LANCZOS)
                 row = idx // grid_cols
                 col = idx % grid_cols
                 x = col * thumb_w

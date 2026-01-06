@@ -205,7 +205,7 @@ def analyze_contrast(colors: List[Tuple[int, int, int]]) -> str:
         return "medium"
 
 
-def match_to_palette(colors: List[Tuple[int, int, int]], warmth: str = None, saturation: str = None, brightness: str = None) -> str:
+def match_to_palette(colors: List[Tuple[int, int, int]], warmth: Optional[str] = None, saturation: Optional[str] = None, brightness: Optional[str] = None) -> str:
     """Match extracted colors to a predefined palette.
     
     Args:

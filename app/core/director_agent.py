@@ -84,7 +84,7 @@ MOOD_KEYWORDS = {
 }
 
 
-def detect_scene_type(description: str, desc_lower: str = None) -> str:
+def detect_scene_type(description: str, desc_lower: Optional[str] = None) -> str:
     """Detect the type of scene from description.
     
     Args:
@@ -103,7 +103,7 @@ def detect_scene_type(description: str, desc_lower: str = None) -> str:
     return "general"
 
 
-def detect_mood(description: str, desc_lower: str = None) -> str:
+def detect_mood(description: str, desc_lower: Optional[str] = None) -> str:
     """Detect the mood/atmosphere from description.
     
     Args:
