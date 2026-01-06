@@ -68,11 +68,7 @@ def validate_continuity(outputs: List[Dict[str, Any]], tolerance: float = None) 
         cur_color = get_avg_color(image_path)
         diff = color_distance(ref_color, cur_color)
         
-        # Simple score: 1.0 is perfect match, 0.0 is far apart
-        # Max theoretical distance in unit cube is sqrt(3) ~ 1.732
-        score = max(0.0, 1.0 - (diff / 1.732)) 
-        
-        # User requested 1.0 - diff for simple approx, but let's stick to their formula concept
+        # Continuity score: 1.0 is perfect match, 0.0 is far apart
         # diff is raw euclidean distance
         continuity_score = max(0.0, 1.0 - diff)
         

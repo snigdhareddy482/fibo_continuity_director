@@ -31,8 +31,7 @@ def create_storyboard_grid(image_paths: List[str], output_path: str, grid_cols: 
         return ""
 
     try:
-        images = [Image.open(p).convert("RGB") for p in valid_paths]
-        n_images = len(images)
+        n_images = len(valid_paths)
         
         # Dynamically choose grid columns based on image count to avoid empty cells
         if grid_cols is None:
@@ -49,13 +48,11 @@ def create_storyboard_grid(image_paths: List[str], output_path: str, grid_cols: 
             else:
                 grid_cols = min(5, math.ceil(math.sqrt(n_images)))
         
-        # Define uniform thumbnail size
+        # Define uniform thumbnail size - get ratio from first image only
         thumb_w = 320
-        ratio = images[0].height / images[0].width
+        with Image.open(valid_paths[0]) as first_img:
+            ratio = first_img.height / first_img.width
         thumb_h = int(thumb_w * ratio)
-        
-        # Resize all
-        thumbs = [img.resize((thumb_w, thumb_h), Image.Resampling.LANCZOS) for img in images]
         
         n_rows = math.ceil(n_images / grid_cols)
         
@@ -68,13 +65,16 @@ def create_storyboard_grid(image_paths: List[str], output_path: str, grid_cols: 
         grid_h = n_rows * thumb_h
         grid_img = Image.new("RGB", (grid_w, grid_h), (30, 20, 50))  # Dark purple background
         
-        # Paste images
-        for idx, thumb in enumerate(thumbs):
-            row = idx // grid_cols
-            col = idx % grid_cols
-            x = col * thumb_w
-            y = row * thumb_h
-            grid_img.paste(thumb, (x, y))
+        # Process and paste images one at a time to reduce memory usage
+        for idx, img_path in enumerate(valid_paths):
+            with Image.open(img_path) as img:
+                img = img.convert("RGB")
+                thumb = img.resize((thumb_w, thumb_h), Image.Resampling.LANCZOS)
+                row = idx // grid_cols
+                col = idx % grid_cols
+                x = col * thumb_w
+                y = row * thumb_h
+                grid_img.paste(thumb, (x, y))
         
         # Create branding for empty cells
         if empty_cells > 0:
